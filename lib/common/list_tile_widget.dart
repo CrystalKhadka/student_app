@@ -17,8 +17,7 @@ class ListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.end,
+      leading: Stack(
         children: [
           CircleAvatar(
             backgroundImage: AssetImage(
@@ -26,7 +25,18 @@ class ListTileWidget extends StatelessWidget {
             ),
             radius: 30,
           ),
-          const Icon(Icons.add),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: SizedBox(
+              height: 30,
+              width: 30,
+              child: FloatingActionButton(
+                onPressed: () {},
+                child: const Icon(Icons.add),
+              ),
+            ),
+          ),
         ],
       ),
       title: Text('$fname $lname '),
