@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 class MyTextFormField extends StatelessWidget {
   const MyTextFormField({
     super.key,
-    required this.onChanged,
+    required this.controller,
     required this.text,
   });
 
-  final ValueChanged onChanged;
+  final TextEditingController controller;
   final String text;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onChanged: onChanged,
+      controller: controller,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
