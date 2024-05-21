@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:student_app/screen/view_student_screen.dart';
+import 'package:student_app/model/box_students.dart';
+import 'package:student_app/model/student.dart';
 
-import '../model/student.dart';
+import '../common/my_card.dart';
 
-class StudentDetailsScreen extends StatefulWidget {
-  const StudentDetailsScreen({super.key});
+class AddStudentScreen extends StatefulWidget {
+  const AddStudentScreen({super.key});
 
   @override
-  State<StudentDetailsScreen> createState() => _StudentDetailsScreenState();
+  State<AddStudentScreen> createState() => _AddStudentScreenState();
 }
 
-class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
+class _AddStudentScreenState extends State<AddStudentScreen> {
   final _gap = const SizedBox(height: 10);
 
   // final _fnameController = TextEditingController();
@@ -25,21 +26,14 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
 
   late TextEditingController _fnameController;
   late TextEditingController _lnameController;
-  late TextEditingController _cityController;
-
-  List<DropdownMenuItem> cities = [];
+  late TextEditingController _ageController;
 
   @override
   void initState() {
     _fnameController = TextEditingController(text: 'Crystal');
     _lnameController = TextEditingController(text: 'Khadka');
-    _cityController = TextEditingController();
+    _ageController = TextEditingController();
 
-    cities = [
-      const DropdownMenuItem(value: 'Kathmandu', child: Text('Kathmandu')),
-      const DropdownMenuItem(value: 'Bhaktapur', child: Text('Bhaktapur')),
-      const DropdownMenuItem(value: 'Lalitpur', child: Text('Lalitpur')),
-    ];
     super.initState();
   }
 
@@ -47,7 +41,7 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
   void dispose() {
     _fnameController.dispose();
     _lnameController.dispose();
-    _cityController.dispose();
+    _ageController.dispose();
     super.dispose();
   }
 
@@ -93,36 +87,33 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
                   return null;
                 },
               ),
-              _gap,
-              DropdownButtonFormField(
-                items: cities,
-                onChanged: (value) {
-                  _cityController.text = value.toString();
-                },
+              TextFormField(
+                controller: _ageController,
                 decoration: const InputDecoration(
-                  hintText: 'Select city',
+                  hintText: 'Age',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
-                  if (value == null) {
-                    return 'Please select city';
+                  if (value!.isEmpty) {
+                    return 'Please enter age';
                   }
                   return null;
                 },
               ),
+              _gap,
               _gap,
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
                     if (_key.currentState!.validate()) {
-                      final student = Student(
-                        fname: _fnameController.text,
-                        lname: _lnameController.text,
-                        age: int.parse(_cityController.text),
-                      );
                       setState(() {
-                        students.add(student);
+                        final student = Student(
+                          fname: _fnameController.text,
+                          lname: _lnameController.text,
+                          age: int.parse(_ageController.text),
+                        );
+                        boxStudents.add(student);
                       });
                     }
                   },
@@ -133,12 +124,11 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const ViewStudentScreen();
-                    }));
+                    setState(() {
+                      boxStudents.clear();
+                    });
                   },
-                  child: const Text('View Student'),
+                  child: const Text('Delete All Student'),
                 ),
               ),
               _gap,
@@ -147,25 +137,15 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
                 style: TextStyle(fontSize: 20),
               ),
               _gap,
-              students.isEmpty
+              boxStudents.isEmpty
                   ? const Text('No data')
                   : Expanded(
                       child: ListView.separated(
                         separatorBuilder: (context, index) => const Divider(),
-                        itemCount: students.length,
+                        itemCount: boxStudents.length,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(students[index].fname),
-                            subtitle: Text('${students[index].age}'),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                setState(() {
-                                  students.removeAt(index);
-                                });
-                              },
-                            ),
-                          );
+                          Student student = boxStudents.getAt(index);
+                          return MyCard(student: student);
                         },
                       ),
                     ),

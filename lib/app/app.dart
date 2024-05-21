@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_app/screen/discover_screen.dart';
+import 'package:student_app/screen/add_student_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -7,7 +7,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: DiscoverScreen(),
+      home: AddStudentScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -13,25 +13,36 @@ class DiscoverScreen extends StatelessWidget {
           time: '2h',
           imageName: 'crystal.jpg'),
       const ListTileWidget(
-          fname: 'Crystal',
-          lname: 'Khadka',
-          time: '2h',
+          fname: 'Rushmit',
+          lname: 'Karki',
+          time: '4h',
           imageName: 'crystal.jpg'),
       const ListTileWidget(
           fname: 'Crystal',
           lname: 'Khadka',
-          time: '2h',
+          time: '8h',
           imageName: 'crystal.jpg'),
       const ListTileWidget(
           fname: 'Crystal',
           lname: 'Khadka',
-          time: '2h',
+          time: '10h',
           imageName: 'crystal.jpg'),
     ];
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Discover'),
-          centerTitle: true,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.explore,
+                color: Colors.red,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Text("Discover"),
+            ],
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

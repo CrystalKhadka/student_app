@@ -1,7 +1,21 @@
-class Student {
-  final String fname;
-  final String lname;
-  final String city;
+import 'package:hive/hive.dart';
 
-  Student({required this.fname,required this.lname,required this.city,});
+part 'student.g.dart';
+
+@HiveType(typeId: 1)
+class Student {
+  @HiveField(0)
+  final String fname;
+
+  @HiveField(1)
+  final String lname;
+
+  @HiveField(2)
+  final int age;
+
+  Student({
+    required this.fname,
+    required this.lname,
+    required this.age,
+  });
 }
